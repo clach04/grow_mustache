@@ -10,7 +10,11 @@ Given a db connection, SQL query, and optional bind params
 import os
 import sys
 
-import stache  # from https://github.com/clach04/Stache
+try:
+    import stache  # from https://github.com/clach04/Stache
+except ImportError:
+    # Try wil camel case
+    import Stache as stache
 
 
 def select_dict_from_db_generator(cursor, sql_query, bind_params=None, dict_constructor=dict):
@@ -82,22 +86,27 @@ def demo(setup_func):
     bind_params = None
 
     try:
+        # Open and close cursor for each demo for easy copy/paste
         c = db.cursor()
         tmp_template = result_to_empty_template(c, sql, bind_params)
         print tmp_template
+        c.close()
 
+        c = db.cursor()
         rows = select_dict_from_db_generator(c, sql, bind_params)
         print '*' * 65
         for x in rows:
             print x
         print '*' * 65
+        c.close()
 
+        c = db.cursor()
         rows = select_dict_from_db_generator(c, sql, bind_params)
         template_dict = {'rows': rows}  # NOTE rows is an iterator NOT a list
         final = stache.Stache().render(tmp_template, template_dict)
         print final
-
         c.close()
+
         db.commit()  # or rollback
     finally:
         db.close()
