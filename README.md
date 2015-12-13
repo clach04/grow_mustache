@@ -1,2 +1,5 @@
 # grow_mustache
-Helper functions for generating Nustache templates
+
+Python helper functions for generating Mustache templates
+
+Currently only has a demo for sqlite3.
