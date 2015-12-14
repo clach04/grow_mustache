@@ -65,9 +65,9 @@ def result_to_empty_template(cursor, sql_query, bind_params=None, dict_construct
     <tbody>
         {{open_stache}}#rows{{close_stache}}
         <tr>
-        {{#column_names}}<td>{{open_stache}}{{name}}{{close_stache}}</td>
-        {{/column_names}}
-        </tr>
+            {{#column_names}}<td>{{open_stache}}{{name}}{{close_stache}}</td>
+            {{/column_names}}
+            </tr>
         {{open_stache}}/rows{{close_stache}}
     </tbody>
 </table>
